@@ -46,6 +46,6 @@ script:
 notifications:
   irc:
     channels:
-      - "irc.rizon.net#project_skyfire"
+      - "irc.rizon.net#project_arina"
     on_success: always
     on_failure: always
