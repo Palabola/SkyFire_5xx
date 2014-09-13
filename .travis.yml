@@ -15,26 +15,33 @@ git:
   depth: 1
 
 branches:
-  only:
-    - master
-
+only:
+- master
 compiler:
-  - clang
-
+- gcc
 before_install:
-  - echo "yes" | sudo add-apt-repository ppa:kalakris/cmake
-  - echo "yes" | sudo add-apt-repository ppa:ubuntu-toolchain-r/test
-  - sudo apt-get update
-  - sudo apt-get install libace-dev
-  - sudo apt-get install libncurses5-dev
-  - sudo apt-get install build-essential autoconf libtool gcc-4.8 g++-4.8 make cmake git-core patch wget links zip unzip unrar
-  - sudo apt-get install openssl libssl-dev mysql-server mysql-client libmysqlclient15-dev libmysql++-dev libreadline6-dev zlib1g-dev libbz2-dev
-  
+- echo "yes" | sudo add-apt-repository ppa:kalakris/cmake
+- echo "yes" | sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+- sudo apt-get update
+- sudo apt-get install gcc-4.8 g++-4.8
+- sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 40 --slave /usr/bin/g++ g++ /usr/bin/g++-4.8
+- sudo update-alternatives --config gcc
+install:
+- sudo apt-get install libace-dev
+- sudo apt-get install libncurses5-dev
+- sudo apt-get install build-essential autoconf libtool make cmake git-core patch wget links zip unzip unrar
+- sudo apt-get install openssl libssl-dev mysql-server mysql-client libmysqlclient15-dev libmysql++-dev libreadline6-dev zlib1g-dev libbz2-dev
+before_script:
+#Symlinking
+- sudo rm /usr/bin/cpp /usr/bin/gcc /usr/bin/g++
+- sudo ln -s /usr/bin/cpp-4.8 /usr/bin/cpp
+- sudo ln -s /usr/bin/gcc-4.8 /usr/bin/gcc
+- sudo ln -s /usr/bin/g++-4.8 /usr/bin/g++
 script:
-  - mkdir build
-  - cd build
-  - cmake ../ -DSCRIPTS=1 -DTOOLS=1
-  - make -j16
+- mkdir build
+- cd build
+- cmake ../ -DSCRIPTS=1 -DTOOLS=1
+- make -j16
 
 notifications:
   irc:
