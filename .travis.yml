@@ -40,7 +40,7 @@ before_script:
 script:
 - mkdir build
 - cd build
-- ../cmake
+- cmake -DSCRIPTS=1 ..
 - make -j16
 
 notifications:
